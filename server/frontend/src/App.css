@@ -1,3 +1,7 @@
+import Dealers from './components/Dealers/Dealers';
+
+      <Route path="/dealers" element={<Dealers/>} />
+
 .App {
   text-align: center;
 }

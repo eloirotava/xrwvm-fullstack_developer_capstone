@@ -1,4 +1,4 @@
-# Uncomment the imports below before you add the function code
+# server/djangoapp/restapis.py
 import requests
 import os
 from dotenv import load_dotenv
@@ -28,19 +28,30 @@ def get_request(endpoint, **kwargs):
         # If any error occurs
         print("Network exception occurred")
 
+def analyze_review_sentiments(text):
+    request_url = sentiment_analyzer_url+"analyze/"+text
+    try:
+        # Call get method of requests library with URL and parameters
+        response = requests.get(request_url)
+        return response.json()
+    except Exception as err:
+        print(f"Unexpected {err=}, {type(err)=}")
+        print("Network exception occurred")
+
 def get_dealer_details(request, dealer_id):
     if(dealer_id):
         endpoint = "/fetchDealer/"+str(dealer_id)
         dealership = get_request(endpoint)
         return JsonResponse({"status":200,"dealer":dealership})
     else:
-        return JsonResponse({"status":400,"message":"Bad Request"})        
+        return JsonResponse({"status":400,"message":"Bad Request"})
 
- def post_review(data_dict):
+# A função abaixo estava com indentação errada no seu arquivo original
+def post_review(data_dict):
     request_url = backend_url+"/insert_review"
     try:
         response = requests.post(request_url,json=data_dict)
         print(response.json())
         return response.json()
     except:
-        print("Network exception occurred")   
+        print("Network exception occurred")
